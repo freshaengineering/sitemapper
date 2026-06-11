@@ -1,12 +1,12 @@
 version: 1
-generated_at: 2026-05-25T15:58:58Z
+generated_at: 2026-06-11T15:40:42Z
 internal: []
 trusted:
   - action: actions/cache
     refs:
-      - v4
+      - 0057852bfaa89a56745cba8c7296529d2fc39830
     occurrences:
-      v4:
+      0057852bfaa89a56745cba8c7296529d2fc39830:
         .github/workflows/test.yml:
           - jobs.test.steps.[2].uses
   - action: actions/checkout
