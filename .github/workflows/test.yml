@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
 
-      - uses: erlef/setup-elixir@v1
+      - uses: erlef/setup-elixir@fc68ffb90438ef2936bbb3251622353b3dcb2f93 # v1
         id: setup-elixir
         with:
           otp-version: ${{ matrix.otp }}
