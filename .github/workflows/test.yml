@@ -10,19 +10,19 @@ jobs:
     strategy:
       matrix:
         include:
-          - elixir: 1.17.x
-            otp: 27.x
+          - elixir: 1.17.3-otp-27
+            otp: "27"
             check_formatted: true
-          - elixir: 1.16.x
-            otp: 26.x
-          - elixir: 1.15.x
-            otp: 25.x
-          - elixir: 1.14.x
-            otp: 25.x
-          - elixir: 1.13.x
-            otp: 24.x
-          - elixir: 1.12.x
-            otp: 24.x
+          - elixir: 1.16.3-otp-26
+            otp: "26"
+          - elixir: 1.15.8-otp-25
+            otp: "25"
+          - elixir: 1.14.5-otp-25
+            otp: "25"
+          - elixir: 1.13.4-otp-24
+            otp: "24"
+          - elixir: 1.12.3-otp-24
+            otp: "24"
 
     steps:
       - name: Harden the runner
@@ -33,18 +33,20 @@ jobs:
 
       - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
 
-      - uses: step-security/setup-beam@05e480cfdc64c72ab6c25b134dd1f57e29776c84 # v1.24.1
-        id: setup-elixir
+      - name: Setup mise
+        uses: step-security/mise-action@2796166110dee826668caddd4bffedae5116e7cd # v4.2.0
         with:
-          otp-version: ${{ matrix.otp }}
-          elixir-version: ${{ matrix.elixir }}
+          mise_toml: |
+            [tools]
+            elixir = "${{ matrix.elixir }}"
+            erlang = "${{ matrix.otp }}"
 
       - name: Retrieve Mix Dependencies Cache
         uses: step-security/runs-on-cache@c5b0cba15d05488ebc630ad8d1e95b3d9b35ac73 # v5.0.7
         id: mix-cache
         with:
           path: deps
-          key: ${{ runner.os }}-${{ steps.setup-elixir.outputs.otp-version }}-${{ steps.setup-elixir.outputs.elixir-version }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
 
       - name: Install Mix Dependencies
         if: steps.mix-cache.outputs.cache-hit != 'true'

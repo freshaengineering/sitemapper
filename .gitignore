@@ -29,3 +29,5 @@ test/store
 benchmarks
 bench/fast_sitemap
 bench/sitemapper
+
+.github/actions.lock.yaml
