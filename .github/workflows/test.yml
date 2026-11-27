@@ -5,7 +5,9 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # mise 2026.8.12 only ships precompiled Erlang lookups for Ubuntu <= 24.04;
+    # ubuntu-latest (26.04) finds no locked linux-x64 build.
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Harden the runner
